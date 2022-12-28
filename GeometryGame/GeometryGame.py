@@ -1,4 +1,4 @@
-class Point:
+class Point(object):
     """
     Class defining a 2D point within a euclidian space.
 
@@ -60,7 +60,7 @@ class Point:
         """
         return ((newPoint.x - self.x)**2 + (newPoint.y - self.y)**2)**0.5
 
-class Rectangle:
+class Rectangle(object):
     """
     Class defining a rectangle in a 2D euclidian space. Rectangle object will be used to define whether or not a user
     defined point object is within the area defined by the rectangle object.
