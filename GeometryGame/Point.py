@@ -38,20 +38,18 @@ class Point:
         else:
             return False
     
-    def distance(self, newX, newY):
+    def distance(self, newPoint):
         """
         Calculate and return the euclidian distance from the instance point (self.x, self.y) to the new point
         (newX, newY)
 
         Parameters
         -----------
-        newX :: float - x coordinate of new point
-        
-        newY :: float - y coordinate of new point
+        newPoint :: Point object - new point objec coordinates (newPoint.x, newPoint.y) to calculate distance relative to
 
         Returns
         -----------
         float - distance between instance point and new point
 
         """
-        return ((newX - self.x)**2 + (newY - self.y)**2)**0.5
+        return ((newPoint.x - self.x)**2 + (newPoint.y - self.y)**2)**0.5
