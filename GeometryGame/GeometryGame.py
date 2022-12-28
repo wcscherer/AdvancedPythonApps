@@ -38,8 +38,8 @@ class Point(object):
         boolean :: True if point is within the defined rectangle, false otherwise
 
         """
-        if (rectangle.lowerLeft.x <= self.x <= rectangle.upperRight.x) \
-            & (rectangle.lowerLeft[1] <= self.x <= rectangle.upperRight[1]):
+        if (rectangle.firstPoint.x <= self.x <= rectangle.secondPoint.x) \
+            & (rectangle.firstPoint[1] <= self.x <= rectangle.secondPoint[1]):
             return True
         else:
             return False
@@ -67,16 +67,31 @@ class Rectangle(object):
 
     Parameters
     -----------
-    lowerLeft :: Point object - lower left vertex coordinates of the rectangle (x, y)
+    firstPoint :: Point object - lower left vertex coordinates of the rectangle (x, y)
 
-    upperRight :: Point object - upper right vertex coordinates of the rectangle (x, y) - see Point
+    secondPoint :: Point object - upper right vertex coordinates of the rectangle (x, y) - see Point
 
     Methods
     -----------
-
+    area :: calculates the area of the Rectangle instance and returns a float
 
     """
 
-    def __init__(self, lowerLeft, upperRight):
-        self.lowerLeft = lowerLeft
-        self.upperRight = upperRight
+    def __init__(self, firstPoint, secondPoint):
+        self.firstPoint = firstPoint
+        self.secondPoint = secondPoint
+
+    def area(self,):
+        """
+        Calculates the area of the Rectangle instance based upon firstPoint and secondPoint
+    
+        Parameters
+        -----------
+        None
+
+        Returns
+        -----------
+        area :: float - unitless area of 2D Rectangle object
+        """
+
+        return (abs(self.secondPoint.x - self.firstPoint.x) * abs(self.secondPoint.y - self.firstPoint.y))
