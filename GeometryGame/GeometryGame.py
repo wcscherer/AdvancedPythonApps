@@ -4,17 +4,17 @@ class Point(object):
 
     Parameters
     ----------
-    x :: float - x coordinate
-    y :: float - y coordinate
+    x : float - x coordinate
+    y : float - y coordinate
 
     Methods
     ----------
 
-    falls_in_rectangle :: takes a Rectangle object instance and etermines if the point instance 
+    falls_in_rectangle: takes a Rectangle object instance and etermines if the point instance 
         falls within the rectangle instance, returns bool
 
     
-    distance :: takes a Point object instance and calculates the distance from the given instance point to 
+    distance: takes a Point object instance and calculates the distance from the given instance point to 
         the argument point instance, returns float
     """
 
@@ -30,16 +30,16 @@ class Point(object):
 
         Parameters
         -----------
-        rectangle :: Rectangle object - contains the Point objects defining the loer left vertex and upper right
+        rectangle: Rectangle object - contains the Point objects defining the loer left vertex and upper right
         vertex of the rectangle, see Rectangle
 
         Returns
         -----------
-        boolean :: True if point is within the defined rectangle, false otherwise
+        boolean: True if point is within the defined rectangle, false otherwise
 
         """
         if (rectangle.firstPoint.x <= self.x <= rectangle.secondPoint.x) \
-            & (rectangle.firstPoint[1] <= self.x <= rectangle.secondPoint[1]):
+            & (rectangle.firstPoint.y <= self.y <= rectangle.secondPoint.y):
             return True
         else:
             return False
@@ -51,7 +51,7 @@ class Point(object):
 
         Parameters
         -----------
-        newPoint :: Point object - new point objec coordinates (newPoint.x, newPoint.y) to calculate distance relative to
+        newPoint: Point object - new point objec coordinates (newPoint.x, newPoint.y) to calculate distance relative to
 
         Returns
         -----------
@@ -67,13 +67,13 @@ class Rectangle(object):
 
     Parameters
     -----------
-    firstPoint :: Point object - lower left vertex coordinates of the rectangle (x, y)
+    firstPoint: Point object - lower left vertex coordinates of the rectangle (x, y)
 
-    secondPoint :: Point object - upper right vertex coordinates of the rectangle (x, y) - see Point
+    secondPoint: Point object - upper right vertex coordinates of the rectangle (x, y) - see Point
 
     Methods
     -----------
-    area :: calculates the area of the Rectangle instance and returns a float
+    area: calculates the area of the Rectangle instance and returns a float
 
     """
 
@@ -91,7 +91,31 @@ class Rectangle(object):
 
         Returns
         -----------
-        area :: float - unitless area of 2D Rectangle object
+        area: float - unitless area of 2D Rectangle object
         """
 
         return (abs(self.secondPoint.x - self.firstPoint.x) * abs(self.secondPoint.y - self.firstPoint.y))
+
+# Implementation of Command Line Game
+import random
+
+# Generate Random Rectangle by generating random two points
+randPoint1 = Point(random.uniform(0,9), random.uniform(0,9))
+randPoint2 = Point(random.uniform(9,19), random.uniform(9,19))
+rectangle = Rectangle(randPoint1, randPoint2)
+
+#Print out the Rectangle Coordinates
+print("\n*** WELCOME TO THE RECTANGLE GUESSING GAME ***\n")
+print("Rectangle vertices coordinates: {}, {} and {}, {}\n".format(rectangle.firstPoint.x, rectangle.firstPoint.y, 
+    rectangle.secondPoint.x, rectangle.secondPoint.y))
+
+#Ask for User Input to Guess Point Within Rectangle
+print("Guess point coordinates within the rectangle")
+userPoint = Point(float(input("Guess X: ")), float(input("Guess Y: ")))
+
+#Ask User to Guess Area of Rectangle
+userArea = float(input("Guess the rectangle area: "))
+
+#Report User Results
+print("Was your point guess within the rectangle?", userPoint.falls_in_rectangle(rectangle=rectangle))
+print("Your rectangle area guess was off by:", rectangle.area() - userArea)
