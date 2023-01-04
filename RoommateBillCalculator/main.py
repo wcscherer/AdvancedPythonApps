@@ -33,11 +33,11 @@ class Roommate(object):
     pay_bill : arg: bill object - method of calculating how much the roommates have to pay based upon the bill (Bill instance)
     """
 
-    def __init__(self, roommate_name, days_in_unit):
-        self.roommate_name = roommate_name
+    def __init__(self, name, days_in_unit):
+        self.roommate_name = name
         self.days_in_unit = days_in_unit
 
-    def pay_bill(self, bill_instance, days_in_unit) -> float:
+    def pay_bill(self, bill_instance, other_roommate) -> float:
         """
         Assigns a bill to be paid by the roommate
 
@@ -45,14 +45,19 @@ class Roommate(object):
         -----------
         bill_instance: Bill obj - the bill to be split and paid by roommates for given pay period and fractional occupancy
 
-        days_in_unit: int - number of days roommate spent in the unit, used to calculate fraction of total bill to pay
+        other_roommate: Roommate obj - instance of other roommate sharing the apartment
 
         Returns
         -----------
-        bill_amount: float - fraction of bill to be paid by roommate based upon number of days in unit
+        bill_amount: float - fractional bill to be paid by roommate instance based upon number of days in unit and number of days
+        other roommate occupied house
 
         """
-        pass
+        bill_fraction = self.days_in_unit / (self.days_in_unit + other_roommate.days_in_unit)
+
+        bill_amount = bill_fraction * bill_instance.amount
+
+        return bill_amount
 
 class PdfReport(object):
     """
