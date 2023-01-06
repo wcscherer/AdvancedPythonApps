@@ -1,3 +1,5 @@
+from fpdf import FPDF
+
 class Bill(object):
     """
     Class defining the amount to be paid (bill) by both roommates over the given rental period (month, year)
@@ -6,7 +8,7 @@ class Bill(object):
     ----------
     amount: float - total amount of money owed by the roommates for the given pay period
 
-    period: tuple (str, int) - period the amount is to be paid for (month, year)
+    period: str - period the amount is to be paid for (month, year)
 
     Methods
     ----------
@@ -53,6 +55,7 @@ class Roommate(object):
         other roommate occupied house
 
         """
+        # bill amount per user depends on their fractional time spent in the unit and the total occupancy for that pay period 
         bill_fraction = self.days_in_unit / (self.days_in_unit + other_roommate.days_in_unit)
 
         bill_amount = bill_fraction * bill_instance.amount
@@ -95,9 +98,26 @@ class PdfReport(object):
 
         bill: Bill obj - the bill instance to be paid by the two roommates living in the unit for the given period
 
-
         Returns
         -----------
-        bill_pdf: pdf file - file containing the fraction of the bill to be paid by each roommate for the given period
+        pdf_bill: pdf file - file containing the fraction of the bill to be paid by each roommate for the given period
         """
-        pass
+        # Generate the pdf object and add a page to edit
+        pdf_bill = FPDF(orientation='P', unit='pt', format='A4')
+        pdf_bill.add_page()
+
+        # Add desired bold title text and image to the pdf based upon user input
+        pdf_bill.set_font(family='Times', size=24, style='B')
+        pdf_bill.cell(w=0, h=80, txt="Roommate's Bill", border=1, align='C', ln=1)
+
+        # Add text box for the rental period
+        pdf_bill.cell(w=100, h=40, txt="Rental Period:", border=1)
+        pdf_bill.cell(w=150, h=80, txt="{}".format(bill.period), border=1, ln=1)
+
+        # Save file to current directory
+        if ".pdf" not in str(self.file_name):
+            self.file_name = str(self.file_name)+".pdf"
+        else:
+            pass
+        pdf_bill.cell(str(self.file_name))
+
