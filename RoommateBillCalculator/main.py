@@ -26,7 +26,7 @@ class Roommate(object):
 
     Parameters
     -----------
-    roommate_name : str - name of roommate in apartment
+    name : str - name of roommate in apartment
 
     days_in_unit : int - number of whole days the given roommate was in the unit
 
@@ -36,7 +36,7 @@ class Roommate(object):
     """
 
     def __init__(self, name, days_in_unit):
-        self.roommate_name = name
+        self.name = name
         self.days_in_unit = days_in_unit
 
     def pay_bill(self, bill_instance, other_roommate) -> float:
@@ -83,7 +83,7 @@ class PdfReport(object):
 
     """
 
-    def __init__(self, file_name, roommate_name, rental_period, bill) -> None:
+    def __init__(self, file_name) -> None:
         self.file_name = file_name
     
     def generate_pdf(self, roommate1, roommate2, bill):
@@ -111,13 +111,48 @@ class PdfReport(object):
         pdf_bill.cell(w=0, h=80, txt="Roommate's Bill", border=1, align='C', ln=1)
 
         # Add text box for the rental period
-        pdf_bill.cell(w=100, h=40, txt="Rental Period:", border=1)
-        pdf_bill.cell(w=150, h=80, txt="{}".format(bill.period), border=1, ln=1)
+        pdf_bill.cell(w=160, h=40, txt="Rental Period:", border=0)
+        pdf_bill.cell(w=150, h=40, txt=str(bill.period), border=0, ln=1)
+
+        # Add text box for total monthly bill
+        pdf_bill.set_font(family='Times', size=18, style='B')
+        pdf_bill.cell(w=110, h=40, txt="Total Bill ($):", border=0)
+        pdf_bill.cell(w=40, h=40, txt="{:.2f}".format(bill.amount), align='L', border=0, ln=1)
+        pdf_bill.cell(w=250, h=40, txt="Cumulative Occupancy (Days):", border=0)
+        pdf_bill.cell(w=40, h=40, txt=str(roommate1.days_in_unit + roommate2.days_in_unit), align='L', border=0, ln=1)
+
+        # Text block headers for amount roommates have to pay
+        pdf_bill.set_font(family='Times', size=18, style='I')
+        pdf_bill.cell(w=120, h=40, txt="Roommate ", align='C', border=0)
+        pdf_bill.cell(w=160, h=40, txt="Days Occupied ", align='C', border=0)
+        pdf_bill.cell(w=120, h=40, txt="Owes ($) ", align='C', border=0, ln=1)
+
+        # Text block for amount roommate 1 has to pay
+        pdf_bill.set_font(family='Times', size=18, style='')
+        pdf_bill.cell(w=120, h=40, txt=str(roommate1.name), align='C', border=0)
+        pdf_bill.cell(w=160, h=40, txt=str(roommate1.days_in_unit), align='C', border=0)
+        pdf_bill.cell(w=110, h=40, txt="{:.2f}".format(roommate1.pay_bill(bill, roommate2)), align='C', border=0, ln=1)
+
+        # Text block for amount roommate 2 has to pay
+        pdf_bill.cell(w=120, h=40, txt=str(roommate2.name), align='C', border=0)
+        pdf_bill.cell(w=160, h=40, txt=str(roommate2.days_in_unit), align='C', border=0)
+        pdf_bill.cell(w=110, h=40, txt="{:.2f}".format(roommate2.pay_bill(bill, roommate1)), align='C', border=0, ln=1)
 
         # Save file to current directory
         if ".pdf" not in str(self.file_name):
             self.file_name = str(self.file_name)+".pdf"
         else:
             pass
-        pdf_bill.cell(str(self.file_name))
+        pdf_bill.output(self.file_name)
 
+# Test area for class methods
+john = Roommate(name='John Doe', days_in_unit=17)
+jane = Roommate(name='Jane Doe', days_in_unit=29)
+
+may_bill = Bill(amount=1237, period="May 2022")
+
+print("John owes {} for pay period {}".format(john.pay_bill(may_bill, jane), may_bill.period))
+print("Jane owes {} for pay period {}".format(jane.pay_bill(may_bill, john), may_bill.period))
+
+pdf = PdfReport("may_2022_bill.pdf")
+pdf.generate_pdf(roommate1=john,roommate2=jane,bill=may_bill)
