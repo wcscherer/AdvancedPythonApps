@@ -145,14 +145,3 @@ class PdfReport(object):
             pass
         pdf_bill.output(self.file_name)
 
-# Test area for class methods
-john = Roommate(name='John Doe', days_in_unit=17)
-jane = Roommate(name='Jane Doe', days_in_unit=29)
-
-may_bill = Bill(amount=1237, period="May 2022")
-
-print("John owes {} for pay period {}".format(john.pay_bill(may_bill, jane), may_bill.period))
-print("Jane owes {} for pay period {}".format(jane.pay_bill(may_bill, john), may_bill.period))
-
-pdf = PdfReport("may_2022_bill.pdf")
-pdf.generate_pdf(roommate1=john,roommate2=jane,bill=may_bill)
