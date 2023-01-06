@@ -106,6 +106,11 @@ class PdfReport(object):
         pdf_bill = FPDF(orientation='P', unit='pt', format='A4')
         pdf_bill.add_page()
 
+        # Add house image to header
+        pdf_bill.image("house.png", x= 60, y=52, w=30, h=30)
+        pdf_bill.image("house.png", x= 507, y=52, w=30, h=30)
+
+
         # Add desired bold title text and image to the pdf based upon user input
         pdf_bill.set_font(family='Times', size=24, style='B')
         pdf_bill.cell(w=0, h=80, txt="Roommate's Bill", border=1, align='C', ln=1)
@@ -144,4 +149,3 @@ class PdfReport(object):
         else:
             pass
         pdf_bill.output(self.file_name)
-
