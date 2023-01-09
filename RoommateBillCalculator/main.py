@@ -1,4 +1,6 @@
 from fpdf import FPDF
+import webbrowser
+import os
 
 class Bill(object):
     """
@@ -113,7 +115,7 @@ class PdfReport(object):
 
         # Add desired bold title text and image to the pdf based upon user input
         pdf_bill.set_font(family='Times', size=24, style='B')
-        pdf_bill.cell(w=0, h=80, txt="Roommate's Bill", border=1, align='C', ln=1)
+        pdf_bill.cell(w=0, h=80, txt="Roommate Utility Bill", border=1, align='C', ln=1)
 
         # Add text box for the rental period
         pdf_bill.cell(w=160, h=40, txt="Rental Period:", border=0)
@@ -148,4 +150,7 @@ class PdfReport(object):
             self.file_name = str(self.file_name)+".pdf"
         else:
             pass
+
+        # save the pdf file and open in a web browser
         pdf_bill.output(self.file_name)
+        webbrowser.open('file://'+os.realpath(self.file_name))
