@@ -162,5 +162,5 @@ class PdfReport(object):
             pass
 
         # save the pdf file and open in a web browser
-        pdf_bill.output(self.file_name)
-        webbrowser.open('file://'+os.path.realpath(self.file_name))
+        pdf_bill.output(f"./files/"+self.file_name)
+        webbrowser.open('file://'+os.path.realpath(f"./files/"+self.file_name))
