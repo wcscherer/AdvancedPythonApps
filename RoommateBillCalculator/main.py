@@ -18,6 +18,10 @@ class Bill(object):
     """
 
     def __init__(self, amount, period):
+        if type(amount) not in [int, float]:
+            raise TypeError('Amount must be int or float')
+        if type(period) not in [str]:
+            raise TypeError('period must be input as a string')
         self.amount = amount
         self.period = period
 
@@ -38,6 +42,10 @@ class Roommate(object):
     """
 
     def __init__(self, name, days_in_unit):
+        if type(days_in_unit) not in [int,]:
+            raise TypeError('days_in_unit must be int or float')
+        if type(name) not in [str]:
+            raise TypeError('name must be input as a string')
         self.name = name
         self.days_in_unit = days_in_unit
 
@@ -86,6 +94,8 @@ class PdfReport(object):
     """
 
     def __init__(self, file_name) -> None:
+        if type(file_name) not in [str]:
+            raise TypeError('file_name must be input as a string')
         self.file_name = file_name
     
     def generate_pdf(self, roommate1, roommate2, bill):
@@ -153,4 +163,4 @@ class PdfReport(object):
 
         # save the pdf file and open in a web browser
         pdf_bill.output(self.file_name)
-        webbrowser.open('file://'+os.realpath(self.file_name))
+        webbrowser.open('file://'+os.path.realpath(self.file_name))
