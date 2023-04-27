@@ -26,9 +26,9 @@ def collect_colors():
     """
     while True:
 
-        red = abs(int(input("How much red should the shape have (0-255): ")))
-        blue = abs(int(input("How much blue should the shape have (0-255): ")))
-        green = abs(red = int(input("How much green should the shape have (0-255): ")))
+        red   = abs(int(input("How much red should the shape have (0-255): ")))
+        blue  = abs(int(input("How much blue should the shape have (0-255): ")))
+        green = abs(int(input("How much green should the shape have (0-255): ")))
 
         # verify all colors within range
         if (red <= 255) and (blue <= 255) and (green <= 255):
