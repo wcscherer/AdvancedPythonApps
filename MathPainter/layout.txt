@@ -1,0 +1,27 @@
+MathPainter app is an CLI app where the user defines the starting location of and the type of shape
+to be drawn (squares and rectangles), their dimensions, and their colors. The program will then produce
+an image file with the defined shape drawn on it.
+
+Classes:
+
+Square(Rectangle):
+    x
+    y
+    side
+    color
+    draw(canvas)
+Rectangle:
+    x
+    y
+    width
+    height
+    color
+    draw(canvas)
+Canvas:
+    filename
+    width
+    height
+    color
+    make(filename)
+
+

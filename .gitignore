@@ -1,3 +1,6 @@
 *.pdf
+*.png
+*.pyc
+__pycache__/
 RoommateBillCalculator/RBC2/
 requirements/
