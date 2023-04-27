@@ -24,10 +24,20 @@ def collect_colors():
     color : array[int]
         3-element array of RGB colors [R(int), B(int), G(int)]
     """
+    while True:
 
-    red = int(input("How much red should the shape have (0-255): "))
-    blue = int(input("How much blue should the shape have (0-255): "))
-    green = red = int(input("How much green should the shape have (0-255): "))
+        red = abs(int(input("How much red should the shape have (0-255): ")))
+        blue = abs(int(input("How much blue should the shape have (0-255): ")))
+        green = abs(red = int(input("How much green should the shape have (0-255): ")))
+
+        # verify all colors within range
+        if (red <= 255) and (blue <= 255) and (green <= 255):
+            break
+        else:
+            print("ERROR - All colors intensities (i) must fall within 0 <= i <= 255")
+            print(f"Current intensities: Red {red}, Blue {blue}, Green {green}")
+            print("Retry selecting colors intensities...")
+            continue
 
     return [red, blue, green]
 
@@ -89,9 +99,9 @@ if __name__ == "__main__":
 
         # if stop is requested, attempt to save figure and exit app
         elif shape.lower() == 'stop' or shape.lower() == 'quit' or shape.lower() == 'exit':
-            print("\nEXITING...")
+            print("EXITING...\n")
             print("Stopping drawing and saving painting.")
-            fileName = input("Enter figure name path to save as png: ")
+            fileName = input("Enter figure name path to save as PNG: ")
             try:
                 canvas.make(imagePath=fileName)
                 print(f"File successfully saved as {fileName}.png")
